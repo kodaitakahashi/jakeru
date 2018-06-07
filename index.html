@@ -204,32 +204,18 @@
              // 入力チェック
              $('#room_name, #user_name').focusout(function(e) {
                  if ($('#room_name').val() != "" && $('#user_name').val() != "") {
-                     console.log('aa');
                      $('#selected_ru').removeClass('disabled');
                  } else if (!$('#selected_ru').hasClass('disabled')){
                      $('#selected_ru').addClass('disabled');
-                     console.log('bb');
                  } else {
-                     console.log('aaaaaaa');
                  }
              });
              
-             /* if ($('#room_name').val() != "" && $('#user_name').val() != "") {
-              *     console.log('aa');
-              *     $('#selected_ru').removeClass('disabled');
-              * } else if (!$('#selected_ru').hasClass('disabled')){
-              *     $('#selected_ru').addClass('disabled');
-              *     console.log('bb');
-              * } else {
-              *     console.log('aaaaaaa');
-              * }
-              */
              var userName = "";
              var roomName = "";
 
              $('.modal').modal();
              $('.modal-result').modal();
-
 
              var keyDictionary = {
                  'Backspace': function(text){
