@@ -15,15 +15,8 @@ const GOO = '1';
 const PAR = '3';
 const CHOKI = '2';
 
-
-
-let user = 5;
-
 // count, status [revese: 準備 start: 開始, end: 終了, draw: ドロー]
 let rooms ={};
-
-
-
 
 
 io.on('connection', (socket) => {
@@ -35,12 +28,10 @@ io.on('connection', (socket) => {
     // ルーム選択
     socket.on('join room', (req) =>{
         console.log('join');
-        
         // ルームが存在しなかったら
         if (!rooms.hasOwnProperty(req.roomName)){
             rooms[req.roomName] ={"count": 1, "userDetails":{}, "status":"revese"};
             rooms[req.roomName].userDetails[req.userName] = "";
-            
             socket.join(req.roomName);
         } else if(rooms[req.roomName].status === "revese"){
             rooms[req.roomName].count++;
@@ -53,7 +44,6 @@ io.on('connection', (socket) => {
             return false;
         }
         console.log(rooms);
-        
         io.to(req.roomName).emit("joined",{"users":rooms[req.roomName].userDetails});
     });
 
