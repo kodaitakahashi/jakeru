@@ -173,7 +173,7 @@
             </div>
             <div class="modal-footer">
                 <a href="#!" class="modal-close waves-effect waves-green btn-flat">やっぱりやらない</a>
-                <a id="selected_ru" href="#!" class="modal-close waves-effect waves-green btn-flat">けってい</a>
+                <a id="selected_ru" href="#!" class="disabled modal-close waves-effect waves-green btn-flat">けってい</a>
             </div>
         </div>
 
@@ -201,15 +201,34 @@
         <script>
          $(function () {
 
+             // 入力チェック
+             $('#room_name, #user_name').focusout(function(e) {
+                 if ($('#room_name').val() != "" && $('#user_name').val() != "") {
+                     console.log('aa');
+                     $('#selected_ru').removeClass('disabled');
+                 } else if (!$('#selected_ru').hasClass('disabled')){
+                     $('#selected_ru').addClass('disabled');
+                     console.log('bb');
+                 } else {
+                     console.log('aaaaaaa');
+                 }
+             });
+             
+             /* if ($('#room_name').val() != "" && $('#user_name').val() != "") {
+              *     console.log('aa');
+              *     $('#selected_ru').removeClass('disabled');
+              * } else if (!$('#selected_ru').hasClass('disabled')){
+              *     $('#selected_ru').addClass('disabled');
+              *     console.log('bb');
+              * } else {
+              *     console.log('aaaaaaa');
+              * }
+              */
              var userName = "";
              var roomName = "";
 
              $('.modal').modal();
              $('.modal-result').modal();
-
-             $('.modal-trigger').leanModal({
-		         dismissible: false
-	         });
 
 
              var keyDictionary = {
