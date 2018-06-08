@@ -138,7 +138,7 @@ io.on('connection', (socket) => {
             }
             console.log(wins);
             
-            io.emit('end',{'winners': wins});
+            io.to(req.roomName).emit('end',{'winners': wins});
 
             
         }
