@@ -91,7 +91,7 @@ io.on('connection', (socket) => {
                 }
             }
 
-            
+            console.log('par:' + par  + 'choki:'+ choki +'goo:' + goo)
             // あいこ
             if (rooms[req.roomName].count == 2){
                 if (par >= 2 || goo >= 2 || choki >= 2){
@@ -104,48 +104,56 @@ io.on('connection', (socket) => {
                 
                 io.emit("draw",{});
                 return;
-            }
-            
-            console.log('win');
-
-
-            var wins = [];
-            if (par > 0 && choki > 0 && goo == 0){
+            } else if (par == rooms[req.roomName].count
+                       || choki == rooms[req.roomName].count
+                       || goo == rooms[req.roomName].count){
+                console.log('draw');
                 
-                for(user in rooms[req.roomName].userDetails){
-                    if (CHOKI ==  rooms[req.roomName].userDetails[user]){
-                        wins.push(user);
-                    }
-                }
-            }
-
-            if (par > 0 && choki == 0 && goo > 0){
-                console.log('par');
+                io.emit("draw",{});
+                return;
                 
-                for(user in  rooms[req.roomName].userDetails){
-                    if (PAR ==  rooms[req.roomName].userDetails[user]){
-                        wins.push(user);
-                    }
+            }
+        
+        console.log('win');
+
+
+        var wins = [];
+        if (par > 0 && choki > 0 && goo == 0){
+            
+            for(user in rooms[req.roomName].userDetails){
+                if (CHOKI ==  rooms[req.roomName].userDetails[user]){
+                    wins.push(user);
                 }
             }
-
-            if (par == 0 && choki > 0 && goo > 0){
-                for(user in rooms[req.roomName].userDetails){
-                    if (GOO ==  rooms[req.roomName].userDetails[user]){
-                        wins.push(user);
-                    }
-                }
-            }
-            console.log(wins);
-            
-            io.to(req.roomName).emit('end',{'winners': wins});
-
-            
         }
-    });
-    
-    
-});
+
+        if (par > 0 && choki == 0 && goo > 0){
+            console.log('par');
+            
+            for(user in  rooms[req.roomName].userDetails){
+                if (PAR ==  rooms[req.roomName].userDetails[user]){
+                    wins.push(user);
+                }
+            }
+        }
+
+        if (par == 0 && choki > 0 && goo > 0){
+            for(user in rooms[req.roomName].userDetails){
+                if (GOO ==  rooms[req.roomName].userDetails[user]){
+                    wins.push(user);
+                }
+            }
+        }
+        console.log(wins);
+        
+        io.to(req.roomName).emit('end',{'winners': wins});
+
+        
+    }
+             });
+      
+      
+     });
 
 http.listen(3000, () => {
     console.log('listening on *:3000');
