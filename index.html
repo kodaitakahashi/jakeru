@@ -29,17 +29,31 @@
 
     </head>
     <body>
-
         <nav>
             <div class="nav-wrapper">
-                <a href="" class="brand-logo">じゃける</a>
+                <a href="#!" class="brand-logo">じゃける</a>
+                <a href="#" data-target="mobile-side" class="sidenav-trigger"><i class="material-icons">めにゅー</i></a>
                 <ul class="right hide-on-med-and-down">
-                    <li><a class="waves-effect waves-light btn-large modal-trigger" href="#modal_ru" id="jakeru">じぇけるぞ!</a></li>
-                    
-
+                    <li><a class="waves-effect waves-light btn-large modal-trigger" href="#modal_ru" id="jakeru-pc">じぇけるぞ!</a></li>
                 </ul>
             </div>
         </nav>
+
+        <ul class="sidenav" id="mobile-side">
+            <li><a class="sidenav-close waves-effect waves-light btn-large modal-trigger" href="#modal_ru" id="jakeru-mob">じぇけるぞ!</a></li>
+        </ul>
+        
+        <!-- 
+             <nav>
+             <div class="nav-wrapper">
+             <a href="" class="brand-logo">じゃける</a>
+             <ul class="right hide-on-med-and-down">
+             <li><a class="waves-effect waves-light btn-large modal-trigger" href="#modal_ru" id="jakeru">じぇけるぞ!</a></li>
+             </ul>
+             </div>
+             </nav> -->
+
+        
 
         <!-- 初期画面 -->
         <div id="init" class="container">
@@ -201,6 +215,9 @@
         <script>
          $(function () {
 
+             // モバイル用
+             $('.sidenav').sidenav();
+             
              // 入力チェック
              $('#room_name, #user_name').focusout(function(e) {
                  if ($('#room_name').val() != "" && $('#user_name').val() != "") {
@@ -232,12 +249,11 @@
                  roomName = $('#room_name').val();
                  userName = $('#user_name').val();
                  socket.emit('join room', {'roomName': roomName, "userName": userName});
-                 
-             })
+             });
 
              $("#game_start").click(function() {
                  socket.emit('start', {'roomName':roomName});
-             })
+             });
 
              $(".janken").click(function() {
                  $('#card').hide();
@@ -258,7 +274,8 @@
 
              socket.on('joined', (info) => {
                  $('#init').hide();
-                 $('#jakeru').addClass('disabled');
+                 $('#jakeru-pc, #jakeru-mob').addClass('disabled');
+                 
                  
                  $('#user_list').removeClass('no-disp');
                  $('#player').empty();
